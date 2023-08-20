@@ -1,8 +1,9 @@
-"use client"
+"use client";
+
 import * as React from "react";
 import { useCallback, useState, useRef } from "react";
-import { ChatWindow } from "./ChatWindow"
-import { MessageInput } from "./MessageInput"
+import { ChatWindow } from "./ChatWindow";
+import { MessageInput } from "./MessageInput";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 export function ChatBox() {
@@ -12,13 +13,24 @@ export function ChatBox() {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const formatSources = (sources: string) => {
+    const sourceList = sources.split(", ");
+    const formattedSources = sourceList.map((source: string) => {
+      const sourceName = source
+        .replace("converted_texts/", "")
+        .replace(".txt", "")
+        .replace(/-/g, " ");
+      return `- ${sourceName}`;
+    });
+    return formattedSources.join("\n");
+  };
+
   const handleSendMessage = useCallback(async () => {
     if (inputText.trim() !== "" && !isLoading) {
       setIsLoading(true);
       setInputText("");
 
       const userMessage = { sender: "user", text: inputText.trim() };
-      // const assistantMessage = { sender: "assistant", text: "" };
 
       setMessages([...messages, userMessage]);
 
@@ -32,19 +44,24 @@ export function ChatBox() {
         .map((msg) => msg.text);
 
       try {
-        const response = await fetch("http://127.0.0.1:5000/chat", {
+        const response = await fetch("https://fac2-2401-4900-1c43-8dcf-91dd-5d3d-ec3e-45fa.ngrok-free.app/chat", {
           method: "POST",
           body: JSON.stringify({
-            prompt: assistantMessages + "\n" + userMessages,
+            prompt: assistantMessages + "\n\n" + userMessages,
           }),
           headers: { "Content-Type": "application/json" },
         });
 
         const responseData = await response.json();
 
+        const formattedSources = formatSources(responseData.sources);
+
         setMessages((prevMessages) => [
           ...prevMessages,
-          { sender: "assistant", text: responseData.response },
+          {
+            sender: "assistant",
+            text: responseData.response.replace(/(?:\r\n|\r|\n)/g, "<br>") + "<br><br>Sources:<br>" + formattedSources.replace(/(?:\r\n|\r|\n)/g, "<br>"),
+          },
         ]);
       } catch (error) {
         console.error("Error:", error);
@@ -54,7 +71,7 @@ export function ChatBox() {
     }
   }, [inputText, isLoading, messages]);
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Enter" && !event.shiftKey) {
       handleSendMessage();
       event.preventDefault();
@@ -76,6 +93,7 @@ export function ChatBox() {
     </section>
   );
 }
+
 
 // import * as React from "react"
 // // import * as dotenv from "dotenv";
