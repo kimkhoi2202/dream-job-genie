@@ -4,4 +4,5 @@ langchain[llms]
 chromadb
 python-dotenv
 tqdm
+pydantic==1.10.12
 gunicorn
