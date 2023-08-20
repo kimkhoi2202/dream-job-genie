@@ -1,6 +1,6 @@
 Flask
 Flask_Cors
-langchain[llms]
+langchain
 chromadb
 python-dotenv
 tqdm
