@@ -1,6 +1,6 @@
-Flask==2.2.5
-Flask_Cors==4.0.0
-langchain==0.0.268
-python-dotenv==1.0.0
-tqdm==4.65.0
+Flask
+Flask_Cors
+langchain
+python-dotenv
+tqdm
 gunicorn
