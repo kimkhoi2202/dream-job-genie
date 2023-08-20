@@ -8,6 +8,7 @@ from glob import glob
 from langchain.memory import ConversationBufferMemory
 from langchain import OpenAI
 from langchain.vectorstores import Chroma
+from flask_cors import CORS
 
 from dotenv import load_dotenv
 load_dotenv('.env')
@@ -29,6 +30,7 @@ llm = OpenAI(temperature=0)
 #%%
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/chat', methods=['POST'])
 def chat():
