@@ -1,6 +1,7 @@
 Flask
 Flask_Cors
-langchain==0.0.26
+langchain[llms]
+chromadb
 python-dotenv
 tqdm
 gunicorn
