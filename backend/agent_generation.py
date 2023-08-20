@@ -3,9 +3,7 @@ from flask import Flask, request, jsonify
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.llms import OpenAI
-from langchain.chains import ConversationalRetrievalChain
 from glob import glob
-from langchain.memory import ConversationBufferMemory
 from langchain import OpenAI
 from langchain.vectorstores import Chroma
 from flask_cors import CORS
