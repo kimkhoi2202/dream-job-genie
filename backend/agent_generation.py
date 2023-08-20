@@ -9,9 +9,11 @@ from langchain.memory import ConversationBufferMemory
 from langchain import OpenAI
 from langchain.vectorstores import Chroma
 from flask_cors import CORS
-
-from dotenv import load_dotenv
-load_dotenv('.env')
+try:
+    from dotenv import load_dotenv
+    load_dotenv('.env')
+except : 
+    print('dotenv error')
 
 from langchain.document_loaders import DirectoryLoader
 from langchain.chains import RetrievalQAWithSourcesChain
