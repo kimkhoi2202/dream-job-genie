@@ -44,7 +44,7 @@ export function ChatBox() {
         .map((msg) => msg.text);
 
       try {
-        const response = await fetch("https://fac2-2401-4900-1c43-8dcf-91dd-5d3d-ec3e-45fa.ngrok-free.app/chat", {
+        const response = await fetch("https://6c52-103-123-226-98.ngrok-free.app/chat", {
           method: "POST",
           body: JSON.stringify({
             prompt: assistantMessages + "\n\n" + userMessages,
