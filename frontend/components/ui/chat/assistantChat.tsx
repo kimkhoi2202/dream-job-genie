@@ -6,9 +6,15 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 
-export function AssistantChatCard({ text = "Hi, how can I help you?" }) {
+interface AssistantChatCardProps {
+  text?: string;
+  sources?: string;
+}
+
+export function AssistantChatCard({ text = "Hi, how can I help you?", sources = "" }: AssistantChatCardProps) {
   return (
     <div className="mb-[25px] ml-[25px] mt-[20px]">
       <Card className="w-[350px]">
@@ -17,7 +23,12 @@ export function AssistantChatCard({ text = "Hi, how can I help you?" }) {
           <CardTitle>
             Genie
           </CardTitle>
-          <CardDescription>{text}</CardDescription>
+          <CardDescription>
+            {text}
+            {sources && (
+              <> ({sources})</>
+            )}
+          </CardDescription>
         </CardHeader>
       </Card>
     </div>

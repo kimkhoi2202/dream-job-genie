@@ -6,6 +6,7 @@ import { UserChatCard } from "@/components/ui/chat/userChat";
 interface IMessage {
   sender: string;
   text: string;
+  sources?: string;
 }
 
 interface ChatWindowProps {
@@ -24,7 +25,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
       </div>
       {messages.map((message, index) =>
         message.sender === "assistant" ? (
-          <AssistantChatCard key={index} text={message.text} />
+          <AssistantChatCard key={index} text={message.text} sources={message.sources} />
         ) : (
           <UserChatCard key={index} text={message.text} />
         )
